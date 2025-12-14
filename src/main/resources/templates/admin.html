@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h2>OfficePortal</h2>
+        <ul>
+            <li><a th:href="@{/admin/dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/admin/users}">Manage Users</a></li>
+            <li><a th:href="@{/admin/departments}">Departments</a></li>
+            <li><a th:href="@{/admin/reports}">Reports</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <header class="topbar">
+            <h1>Admin Dashboard</h1>
+            <b><h2 th:text="${adminName}" >Admin</h2></b>
+        </header>
+
+        <section class="cards">
+            <div class="card">
+                <h3>Total Users</h3>
+                <p th:text="${totalUsers}">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Active Users</h3>
+                <p th:text="${activeUsers}">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Departments</h3>
+                <p th:text="${totalDepartments}">0</p>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <h2>Recent Users</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.firstName} + ' ' + ${user.lastName}">Name</td>
+                        <td th:text="${user.role}">Role</td>
+                        <td th:text="${user.department}">Dept</td>
+                        <td th:text="${user.active ? 'Active' : 'Inactive'}">Status</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
