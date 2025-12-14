@@ -21,10 +21,11 @@ public class AdminService {
 		
 		List<User> list= userDao.getUsers();
 		List<User> Activelist= userDao.getActiveUsers();
+		List<User> Recentlist= userDao.getRecentUser();
 		mv.addObject("totalUsers",list.size());
 		mv.addObject("activeUsers",Activelist.size());
 		mv.addObject("totalDepartments",6);
-		mv.addObject("users",list);
+		mv.addObject("users",Recentlist);
 		return mv;
 	}
 	

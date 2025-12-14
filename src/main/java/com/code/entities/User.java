@@ -1,10 +1,11 @@
 package com.code.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.code.enums.*;
 
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -12,35 +13,48 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-
 @Entity
 public class User {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	private String username;
+	private String password;
+
+	@Enumerated(EnumType.STRING)
+	private Role role;
+
+	private String firstName;
+	private String lastName;
+
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
+
+	@Enumerated(EnumType.STRING)
+	private Department department;
+
+	private String email;
+	private String phone;
+
+	private boolean active;
+
+	private LocalDate joinDate;
 	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	
+	@Column
+	private LocalDateTime lastLogin;
 
-    private String username;
-    private String password;
+	
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+	public LocalDateTime getLastLogin() {
+		return lastLogin;
+	}
 
-    private String firstName;
-    private String lastName;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
-    @Enumerated(EnumType.STRING)
-    private Department department;
-
-    private String email;
-    private String phone;
-
-    private boolean active;
-
-    private LocalDate joinDate;
+	public void setLastLogin(LocalDateTime lastLogin) {
+		this.lastLogin = lastLogin;
+	}
 
 	public Long getId() {
 		return id;
@@ -138,7 +152,4 @@ public class User {
 		this.joinDate = joinDate;
 	}
 
-    
-    
 }
-

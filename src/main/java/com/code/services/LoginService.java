@@ -1,5 +1,6 @@
 package com.code.services;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,20 +11,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.code.dao.UserDao;
 import com.code.entities.User;
 import com.code.enums.Role;
-
+import com.code.repos.UserRepo;
 import jakarta.servlet.http.HttpSession;
 
 @Service
 public class LoginService {
-	
+
 	@Autowired
 	private UserDao userDao;
+
+    
 
 	public ModelAndView checkUser(String username,String password,String role,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		Optional<User> opt = userDao.getUserByUserNameAndPassword(username, password);
 		if(opt.isPresent()) {
 			if(Role.valueOf(role) == opt.get().getRole()) {
+				opt.get().setLastLogin(LocalDateTime.now());
+				userDao.saveUser(opt.get());
 				switch (role) {
 					case "ADMIN": {
 						session.setAttribute(

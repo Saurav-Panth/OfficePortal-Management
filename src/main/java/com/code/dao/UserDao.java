@@ -30,6 +30,13 @@ public class UserDao {
 		
 	}
 	
+	public void saveUser(User user){
+		userRepo.save(user);
+		
+	}
 	
+	public List<User> getRecentUser(){
+		return userRepo.findTop6ByLastLoginIsNotNullOrderByLastLoginDesc();
+	}
 
 }
