@@ -3,7 +3,10 @@ package com.code.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.code.services.AdminService;
@@ -17,9 +20,9 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@GetMapping("/dashboard")
+	@GetMapping("/dashboard")	
 	public ModelAndView admin(HttpSession session) {
-
+		
 	    ModelAndView mv = adminService.getDashBoardData();
 	    mv.addObject("adminName", session.getAttribute("adminName"));
 	    return mv;
@@ -27,11 +30,18 @@ public class AdminController {
 	
 	
 	@GetMapping("/users")
-	public String admin() {
+	public ModelAndView admin() {
 
-	    return "adminUsers";
+	    return adminService.getUserForAdminData();
+	}
+	
+	@GetMapping("/usersearch")
+	public ModelAndView userSearch(@RequestParam String keyword) {
+		
+	    return adminService.getUserForAdminDataSearch(keyword);
 	}
 
+	
 	
 
 			

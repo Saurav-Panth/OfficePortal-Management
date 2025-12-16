@@ -16,5 +16,9 @@ public interface UserRepo extends JpaRepository<User, Long>{
 	
 	public List<User> findTop6ByLastLoginIsNotNullOrderByLastLoginDesc();
 
+	public List<User> findByUsername(String name);
+	
+	
+	//List<User> findAll(PageRequest.of(0,10)); 
 
 }

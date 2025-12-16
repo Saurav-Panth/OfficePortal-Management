@@ -1,10 +1,93 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Admin User</title>
+    <title>Manage Users</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
 </head>
 <body>
-	<h1>ADMIN USER MANAGEMENT</h1>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h2>OfficePortal</h2>
+        <ul>
+            <li><a th:href="@{/admin/dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/admin/users}" class="active">Manage Users</a></li>
+            <li><a th:href="@{/admin/departments}">Departments</a></li>
+            <li><a th:href="@{/admin/reports}">Reports</a></li>
+            <li><a th:href="@{/login}">Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+        <header class="topbar">
+            <h1>User Management</h1>
+        </header>
+
+        <section class="table-section">
+
+            <form th:action="@{/admin/usersearch}" method="get" style="margin-bottom:20px;">
+                <input
+                    type="text"
+                    name="keyword"
+                    placeholder="Search by Id or Name"
+                    style="padding:10px;width:300px;border-radius:6px;border:1px solid #ccc;"
+                />
+                <button type="submit" style="padding:10px 15px;">Search</button>
+            </form>
+			<div th:if="${error}" style="
+			    background:#fee2e2;
+			    color:#991b1b;
+			    padding:10px;
+			    border-radius:6px;
+			    margin-bottom:15px;
+			    font-size:14px;
+			">
+			    <span th:text="${error}"></span>
+			</div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}">1</td>
+                        <td th:text="${user.firstName + ' ' + user.lastName}">Name</td>
+                        <td th:text="${user.email}">email</td>
+                        <td th:text="${user.role}">Role</td>
+                        <td th:text="${user.department}">Dept</td>
+                        <td th:text="${user.active ? 'Active' : 'Inactive'}">Status</td>
+                        <td>
+                            <form
+                                th:action="@{/admin/users/delete/{id}(id=${user.id})}"
+                                method="post"
+                                onsubmit="return confirm('Are you sure you want to delete this user?');"
+                            >
+                                <button type="submit" style="background:#dc2626;color:white;border:none;padding:6px 10px;border-radius:5px;cursor:pointer;">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
 </body>
 </html>
-

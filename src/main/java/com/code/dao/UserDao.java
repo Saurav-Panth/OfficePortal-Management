@@ -38,5 +38,15 @@ public class UserDao {
 	public List<User> getRecentUser(){
 		return userRepo.findTop6ByLastLoginIsNotNullOrderByLastLoginDesc();
 	}
+	
+	public Optional<User> getUsersById(long id){
+		return userRepo.findById(id);
+	}
+	
+	public List<User> getUsersByName(String name){
+		return userRepo.findByUsername(name);
+	}
+	
+	
 
 }
